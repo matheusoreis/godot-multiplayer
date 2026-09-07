@@ -75,7 +75,7 @@ func sign_out(peer_id: int) -> void:
 	if account.has_character():
 		await _account_repository.update_character_location(
 			account.character.id,
-			account.character.map_id,
+			account.character.map,
 			account.character.cell,
 			account.character.facing
 		)
