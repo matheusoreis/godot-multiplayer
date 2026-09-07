@@ -2,12 +2,12 @@ extends Node
 class_name ChatEvent
 
 
-var _network: Network
+var _network: Multiplayer.Server
 var _account_manager: AccountManager
 var _map_manager: MapManager
 
 
-func _init(network: Network, account_manager: AccountManager, map_manager: MapManager) -> void:
+func _init(network: Multiplayer.Server, account_manager: AccountManager, map_manager: MapManager) -> void:
 	_network = network
 	_account_manager = account_manager
 	_map_manager = map_manager
@@ -34,7 +34,7 @@ func map_message(message: String) -> void:
 	if account == null or not account.has_character():
 		return
 
-	var map_id: int = account.character.map_id
+	var map_id: int = account.character.map
 	var map: Map = _map_manager.map(map_id)
 
 	if map == null:
@@ -76,7 +76,7 @@ func _get_peers_in_map(map_id: int) -> Array[int]:
 	for peer_id: int in accounts:
 		var account: Account = accounts[peer_id]
 
-		if account.has_character() and account.character.map_id == map_id:
+		if account.has_character() and account.character.map == map_id:
 			peers.append(peer_id)
 
 	return peers

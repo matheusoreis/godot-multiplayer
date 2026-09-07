@@ -12,6 +12,7 @@ var size: Vector2i
 
 var collisions: Dictionary[Vector2i, int] = {}
 var warps: Dictionary[Vector2i, Array] = {}
+var npcs: Dictionary[int, Npc] = {}
 
 
 func _init(
@@ -34,6 +35,18 @@ func import_collisions(collisions: Dictionary) -> void:
 
 func import_warps(warps: Dictionary) -> void:
 	self.warps.assign(warps)
+
+
+func add_npc(npc: Npc) -> void:
+	npcs[npc.id] = npc
+
+
+func remove_npc(npc_id: int) -> void:
+	npcs.erase(npc_id)
+
+
+func get_npc(npc_id: int) -> Npc:
+	return npcs.get(npc_id)
 
 
 func pixel_size() -> Vector2i:

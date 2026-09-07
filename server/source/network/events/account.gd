@@ -2,11 +2,11 @@ extends Node
 class_name AccountEvent
 
 
-var _network: Network
+var _network: Multiplayer.Server
 var _account_manager: AccountManager
 
 
-func _init(network: Network, account_manager: AccountManager) -> void:
+func _init(network: Multiplayer.Server, account_manager: AccountManager) -> void:
 	_network = network
 	_account_manager = account_manager
 

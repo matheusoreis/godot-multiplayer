@@ -2,6 +2,9 @@ extends RefCounted
 class_name Database
 
 
+const DATABASE_POLL_TIME: int = 1
+
+
 enum Codes {
 	OK = 0, ERROR = 1, INTERNAL = 2, PERM = 3, ABORT = 4, BUSY = 5,
 	LOCKED = 6, NOMEM = 7, READONLY = 8, INTERRUPT = 9, IOERR = 10,
@@ -42,9 +45,9 @@ func _init() -> void:
 	_aslet = Aslet.new()
 
 
-func poll(time: int) -> void:
+func poll() -> void:
 	if _aslet:
-		_aslet.poll(time)
+		_aslet.poll(DATABASE_POLL_TIME)
 
 
 func create(path: String, filename: String) -> Error:
