@@ -106,3 +106,6 @@ func _on_peer_connected(peer_id: int) -> void:
 
 func _on_peer_disconnected(peer_id: int) -> void:
 	print("Peer %d desconectado." % peer_id)
+
+	_map_event.leave_map(peer_id)
+	_account_manager.sign_out(peer_id)
