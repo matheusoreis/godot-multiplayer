@@ -8,12 +8,15 @@ var _map_event: MapEvent
 var _chat_event: ChatEvent
 
 
+var current_scene: Scene
+
+
 func _ready() -> void:
 	if not _setup_network():
 		return
 
-	Network.connected.connect(_on_connected)
-	Network.disconnected.connect(_on_disconnected)
+	Network.connected.connect(go_to_menu)
+	Network.disconnected.connect(go_to_menu)
 
 
 func _setup_network() -> bool:
@@ -52,9 +55,23 @@ func _setup_network() -> bool:
 	return true
 
 
-func _on_connected() -> void:
-	print("Peer %d conectado.")
+func go_to_menu() -> void:
+	_change_scene("res://source/scene/menu/menu.tscn")
 
 
-func _on_disconnected() -> void:
-	print("Peer %d desconectado.")
+func go_to_game() -> void:
+	_change_scene("res://source/scene/game/game.tscn")
+
+
+func _change_scene(scene_path: String) -> void:
+	var packed: PackedScene = load(scene_path)
+	var scene: Node = packed.instantiate()
+
+	if current_scene != null:
+		current_scene.queue_free()
+
+	var class_name_str: String = scene.get_script().get_global_name()
+	scene.name = class_name_str
+
+	current_scene = scene
+	add_child(scene)
