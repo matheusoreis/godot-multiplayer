@@ -2,6 +2,12 @@ extends Node
 class_name Main
 
 
+var _action_event: ActionEvent
+var _account_event: AccountEvent
+var _map_event: MapEvent
+var _chat_event: ChatEvent
+
+
 func _ready() -> void:
 	if not _setup_network():
 		return
@@ -21,26 +27,26 @@ func _setup_network() -> bool:
 		push_error("Erro ao iniciar o cliente (%s)." % error_string(err))
 		return false
 
-	var account_event: AccountEvent = AccountEvent.new()
-	var account_err: Error = account_event.register()
+	_action_event = ActionEvent.new()
+	var action_err: Error = _action_event.register()
+	if action_err != OK:
+		return false
+
+	_account_event = AccountEvent.new()
+	var account_err: Error = _account_event.register()
 	if account_err != OK:
 		return false
 
-	add_child(account_event)
-
-	var map_event: MapEvent = MapEvent.new()
-	var map_err: Error = map_event.register()
+	_map_event = MapEvent.new()
+	var map_err: Error = _map_event.register()
 	if map_err != OK:
 		return false
 
-	add_child(map_event)
 
-	var chat_event: ChatEvent = ChatEvent.new()
-	var chat_err: Error = chat_event.register()
+	_chat_event = ChatEvent.new()
+	var chat_err: Error = _chat_event.register()
 	if chat_err != OK:
 		return false
-
-	add_child(chat_event)
 
 	print("Cliente iniciado com sucesso!")
 	return true
