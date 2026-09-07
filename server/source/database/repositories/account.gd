@@ -50,12 +50,12 @@ func setup(database: Database) -> void:
 	""")
 
 
-func sign_in(email: String, password: String) -> Models.AccountModel:
+func sign_in(email: String, password: String) -> Array:
 	if not _is_email_valid(email):
-		return null
+		return [ERR_INVALID_PARAMETER, "INVALID_EMAIL"]
 
 	if not _is_password_valid(password):
-		return null
+		return [ERR_INVALID_PARAMETER, "INVALID_PASSWORD"]
 
 	var model: Models.AccountModel = await _database.row(
 		"SELECT * FROM accounts WHERE email = ?",
@@ -64,24 +64,24 @@ func sign_in(email: String, password: String) -> Models.AccountModel:
 	)
 
 	if model == null:
-		return null
+		return [ERR_DOES_NOT_EXIST, "ACCOUNT_NOT_FOUND"]
 
 	if not Sha256.new().verify_value(password, model.password):
-		return null
+		return [ERR_UNAUTHORIZED, "INCORRECT_PASSWORD"]
 
 	await update_account_access_at(model.id)
-	return model
+	return [OK, model]
 
 
-func sign_up(email: String, password: String, password_confirm: String) -> bool:
+func sign_up(email: String, password: String, password_confirm: String) -> Array:
 	if not _is_email_valid(email):
-		return false
+		return [ERR_INVALID_PARAMETER, "INVALID_EMAIL"]
 
 	if not _is_password_valid(password):
-		return false
+		return [ERR_INVALID_PARAMETER, "INVALID_PASSWORD"]
 
 	if password != password_confirm:
-		return false
+		return [ERR_INVALID_DATA, "PASSWORDS_DO_NOT_MATCH"]
 
 	var existing: Variant = await _database.scalar(
 		"SELECT COUNT(*) FROM accounts WHERE email = ?",
@@ -89,7 +89,7 @@ func sign_up(email: String, password: String, password_confirm: String) -> bool:
 	)
 
 	if existing != null and existing > 0:
-		return false
+		return [ERR_ALREADY_EXISTS, "EMAIL_ALREADY_REGISTERED"]
 
 	var hashed: String = Sha256.new().hash_value(password)
 	var now: int = _database.now()
@@ -99,7 +99,10 @@ func sign_up(email: String, password: String, password_confirm: String) -> bool:
 		[email, hashed, now, now, now]
 	)
 
-	return result == OK
+	if result != OK:
+		return [ERR_DATABASE_CANT_WRITE, "DATABASE_ERROR"]
+
+	return [OK, null]
 
 
 func update_account_access_at(account_id: int) -> void:
@@ -173,15 +176,15 @@ func character_identifier_exists(account_id: int, identifier: String) -> bool:
 	return result != null
 
 
-func create_character(account_id: int, identifier: String, spritesheet: String) -> Models.CharacterModel:
+func create_character(account_id: int, identifier: String, spritesheet: String) -> Array:
 	if not _is_identifier_valid(identifier):
-		return null
+		return [ERR_INVALID_PARAMETER, "INVALID_IDENTIFIER"]
 
 	if await character_identifier_exists(account_id, identifier):
-		return null
+		return [ERR_ALREADY_EXISTS, "IDENTIFIER_ALREADY_EXISTS"]
 
 	if not Constants.AVALIABLE_SPRITES.has(spritesheet):
-		return null
+		return [ERR_INVALID_PARAMETER, "INVALID_SPRITE"]
 
 	var now: int = _database.now()
 
@@ -206,7 +209,7 @@ func create_character(account_id: int, identifier: String, spritesheet: String) 
 	)
 
 	if result != OK:
-		return null
+		return [ERR_DATABASE_CANT_WRITE, "DATABASE_ERROR"]
 
 	var model: Models.CharacterModel = await _database.row(
 		"SELECT * FROM characters WHERE account_id = ? AND identifier = ?",
@@ -214,10 +217,13 @@ func create_character(account_id: int, identifier: String, spritesheet: String) 
 		Models.CharacterModel
 	)
 
-	return model
+	if model == null:
+		return [ERR_DOES_NOT_EXIST, "DATABASE_ERROR"]
+
+	return [OK, model]
 
 
-func select_character(character_id: int, account_id: int) -> Models.CharacterModel:
+func select_character(character_id: int, account_id: int) -> Array:
 	var model: Models.CharacterModel = await _database.row(
 		"SELECT * FROM characters WHERE id = ? AND account_id = ?",
 		[character_id, account_id],
@@ -225,31 +231,37 @@ func select_character(character_id: int, account_id: int) -> Models.CharacterMod
 	)
 
 	if model == null:
-		return null
+		return [ERR_DOES_NOT_EXIST, "CHARACTER_NOT_FOUND"]
 
 	await update_character_access_at(character_id)
-	return model
+	return [OK, model]
 
 
-func delete_character(character_id: int, account_id: int) -> bool:
+func delete_character(character_id: int, account_id: int) -> Array:
 	if not await is_character_owner(character_id, account_id):
-		return false
+		return [ERR_UNAUTHORIZED, "NOT_OWNER"]
 
 	var result: Error = await _database.exec(
 		"DELETE FROM characters WHERE id = ? AND account_id = ?",
 		[character_id, account_id]
 	)
 
-	return result == OK
+	if result != OK:
+		return [ERR_DATABASE_CANT_WRITE, "DATABASE_ERROR"]
+
+	return [OK, null]
 
 
-func update_character_location(character_id: int, map_id: int, cell: Vector2i, facing: Vector2i) -> bool:
+func update_character_location(character_id: int, map_id: int, cell: Vector2i, facing: Vector2i) -> Array:
 	var result: Error = await _database.exec(
 		"UPDATE characters SET map_id = ?, cell_x = ?, cell_y = ?, facing_x = ?, facing_y = ?, updated_at = ? WHERE id = ?",
 		[map_id, cell.x, cell.y, facing.x, facing.y, _database.now(), character_id]
 	)
 
-	return result == OK
+	if result != OK:
+		return [ERR_DATABASE_CANT_WRITE, "DATABASE_ERROR"]
+
+	return [OK, null]
 
 
 func _is_identifier_valid(identifier: String) -> bool:

@@ -11,10 +11,10 @@ var bgs: String
 var size: Vector2i
 
 var collisions: Dictionary[Vector2i, int] = {}
-var warps: Dictionary[Vector2i, Dictionary] = {}
+var warps: Dictionary[Vector2i, Array] = {}
 
 
-func setup(
+func _init(
 	id: int,
 	identifier: String,
 	bgm: String,
@@ -68,8 +68,8 @@ func has_warp(cell: Vector2i) -> bool:
 	return warps.has(cell)
 
 
-func get_warp(cell: Vector2i) -> Dictionary:
-	return warps.get(cell, {})
+func get_warp(cell: Vector2i) -> Array:
+	return warps.get(cell, [])
 
 
 func can_pass(from: Vector2i, direction: Vector2i) -> bool:
@@ -97,8 +97,8 @@ func can_pass(from: Vector2i, direction: Vector2i) -> bool:
 		return false
 
 	if abs(direction.x) == 1 and abs(direction.y) == 1:
-		var horizontal_cell := Vector2i(from.x + direction.x, from.y)
-		var vertical_cell := Vector2i(from.x, from.y + direction.y)
+		var horizontal_cell: Vector2i = Vector2i(from.x + direction.x, from.y)
+		var vertical_cell: Vector2i = Vector2i(from.x, from.y + direction.y)
 
 		if is_solid(horizontal_cell) or is_solid(vertical_cell):
 			return false

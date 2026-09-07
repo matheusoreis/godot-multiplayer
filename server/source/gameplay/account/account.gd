@@ -12,7 +12,7 @@ var updated_at: int
 var character: Character
 
 
-func setup(
+func _init(
 	id: int,
 	email: String,
 	password: String,
