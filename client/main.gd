@@ -2,6 +2,8 @@ extends Node
 class_name Main
 
 
+var _network: Network.Client
+
 var _action_event: ActionEvent
 var _account_event: AccountEvent
 var _map_event: MapEvent
@@ -15,38 +17,38 @@ func _ready() -> void:
 	if not _setup_network():
 		return
 
-	Network.connected.connect(go_to_menu)
-	Network.disconnected.connect(go_to_menu)
+	_network.connected.connect(go_to_menu)
+	_network.disconnected.connect(go_to_menu)
 
 
 func _setup_network() -> bool:
-	print("Iniciando cliente em %s:%d" % [
-		Constants.HOST,
-		Constants.PORT,
+	_network = Network.Client.new()
+
+	print("Iniciando cliente em %s" % [
+		Constants.ENDPOINT,
 	])
 
-	var err: Error = Network.start(Constants.HOST, Constants.PORT)
+	var err: Error = _network.start(Constants.ENDPOINT)
 	if err != OK:
 		push_error("Erro ao iniciar o cliente (%s)." % error_string(err))
 		return false
 
-	_action_event = ActionEvent.new()
+	_action_event = ActionEvent.new(_network)
 	var action_err: Error = _action_event.register()
 	if action_err != OK:
 		return false
 
-	_account_event = AccountEvent.new()
+	_account_event = AccountEvent.new(_network)
 	var account_err: Error = _account_event.register()
 	if account_err != OK:
 		return false
 
-	_map_event = MapEvent.new()
+	_map_event = MapEvent.new(_network)
 	var map_err: Error = _map_event.register()
 	if map_err != OK:
 		return false
 
-
-	_chat_event = ChatEvent.new()
+	_chat_event = ChatEvent.new(_network)
 	var chat_err: Error = _chat_event.register()
 	if chat_err != OK:
 		return false

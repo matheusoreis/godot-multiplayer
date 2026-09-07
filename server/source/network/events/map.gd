@@ -2,13 +2,13 @@ extends Node
 class_name MapEvent
 
 
-var _network: Multiplayer.Server
+var _network: Network.Server
 var _account_manager: AccountManager
 var _map_manager: MapManager
 
 
 func _init(
-	network: Multiplayer.Server,
+	network: Network.Server,
 	account_manager: AccountManager,
 	map_manager: MapManager
 ) -> void:
@@ -122,8 +122,6 @@ func move_character(direction: Vector2i) -> void:
 		_apply_warp(sender_id, character, map)
 
 
-# Não é um handler de mensagem de peer — é chamado diretamente pelo
-# NpcManager depois que ele já validou e aplicou o movimento do NPC.
 func broadcast_npc_move(map: Map, npc: Npc) -> void:
 	var targets: Array = _peers_in_map(map.id)
 

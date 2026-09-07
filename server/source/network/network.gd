@@ -1,5 +1,5 @@
 extends RefCounted
-class_name Multiplayer
+class_name Network
 
 
 const PACKET_TY: Array[Variant.Type] = [TYPE_INT, TYPE_ARRAY]
@@ -64,7 +64,7 @@ func _validate_args(args_ty: Array[Variant.Type], args: Array) -> Error:
 	return OK
 
 
-class Client extends Multiplayer:
+class Client extends Network:
 	signal connected()
 	signal disconnected()
 
@@ -166,7 +166,7 @@ class Client extends Multiplayer:
 			entry[0].callv(packet[1])
 
 
-class Server extends Multiplayer:
+class Server extends Network:
 	signal peer_connected(peer_id: int)
 	signal peer_disconnected(peer_id: int)
 

@@ -3,7 +3,7 @@ class_name Main
 
 
 var _database: Database
-var _network: Multiplayer.Server
+var _network: Network.Server
 
 var _loop: Loop
 
@@ -73,7 +73,7 @@ func _setup_database() -> bool:
 
 
 func _setup_network() -> bool:
-	_network = Multiplayer.Server.new()
+	_network = Network.Server.new()
 
 	print("Iniciando servidor em %s" % [
 		Constants.ENDPOINT,

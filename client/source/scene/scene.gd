@@ -2,6 +2,9 @@ extends Node2D
 class_name Scene
 
 
+var network: Network.Client
+
+
 @export_category("Controls")
 @export var _interfaces: Dictionary[StringName, Control]
 

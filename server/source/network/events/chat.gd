@@ -2,12 +2,12 @@ extends Node
 class_name ChatEvent
 
 
-var _network: Multiplayer.Server
+var _network: Network.Server
 var _account_manager: AccountManager
 var _map_manager: MapManager
 
 
-func _init(network: Multiplayer.Server, account_manager: AccountManager, map_manager: MapManager) -> void:
+func _init(network: Network.Server, account_manager: AccountManager, map_manager: MapManager) -> void:
 	_network = network
 	_account_manager = account_manager
 	_map_manager = map_manager

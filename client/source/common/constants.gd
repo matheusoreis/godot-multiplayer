@@ -2,8 +2,7 @@ extends Node
 class_name Constants
 
 
-const HOST: String = "127.0.0.1"
-const PORT: int = 7001
+const ENDPOINT: String = "127.0.0.1:4242"
 
 
 const MAJOR_VERSION: int = 1
