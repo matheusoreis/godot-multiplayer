@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="server"
+run/main_scene="uid://drudltwprakwm"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://main.svg"
 
