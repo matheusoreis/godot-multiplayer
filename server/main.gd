@@ -78,12 +78,12 @@ func _setup_network() -> bool:
 		push_error("Erro ao iniciar o servidor (%s)." % error_string(err))
 		return false
 
-	_account_event = AccountEvent.new(_network)
+	_account_event = AccountEvent.new(_network, _account_manager)
 	var account_err: Error = _account_event.register()
 	if account_err != OK:
 		return false
 
-	_map_event = MapEvent.new(_network)
+	_map_event = MapEvent.new(_network, _account_manager, _map_manager)
 	var map_err: Error = _map_event.register()
 	if map_err != OK:
 		return false
