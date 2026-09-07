@@ -4,29 +4,3 @@
 
 [node name="Main" type="Node" unique_id=1885027307]
 script = ExtResource("1_ig7tw")
-
-[node name="Canvas" type="CanvasLayer" parent="." unique_id=1507760667]
-
-[node name="Center" type="CenterContainer" parent="Canvas" unique_id=1048412178]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="HBox1" type="HBoxContainer" parent="Canvas/Center" unique_id=1540379871]
-layout_mode = 2
-
-[node name="Valor1" type="SpinBox" parent="Canvas/Center/HBox1" unique_id=556376672]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Valor2" type="SpinBox" parent="Canvas/Center/HBox1" unique_id=1735908826]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Calcular" type="Button" parent="Canvas/Center/HBox1" unique_id=1802900232]
-layout_mode = 2
-text = "Calcular"
-
-[connection signal="pressed" from="Canvas/Center/HBox1/Calcular" to="." method="_on_calcular_pressed"]

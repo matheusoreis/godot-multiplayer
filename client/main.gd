@@ -58,10 +58,3 @@ func _on_connected() -> void:
 
 func _on_disconnected() -> void:
 	print("Peer %d desconectado.")
-
-
-func _on_calcular_pressed() -> void:
-	var valor1: int = %Valor1.value
-	var valor2: int = %Valor2.value
-
-	Network.exec(&"soma", [valor1, valor2])
