@@ -88,7 +88,7 @@ func _setup_network() -> bool:
 	if map_err != OK:
 		return false
 
-	_chat_event = ChatEvent.new(_network)
+	_chat_event = ChatEvent.new(_network, _account_manager, _map_manager)
 	var chat_err: Error = _chat_event.register()
 	if chat_err != OK:
 		return false
