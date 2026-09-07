@@ -68,9 +68,6 @@ class MapModel extends Models:
 	var bgs: String
 	var size_x: int
 	var size_y: int
-	var wild_encounter_rate: float
-	var min_wild_level: int
-	var max_wild_level: int
 	var created_at: int
 	var updated_at: int
 
@@ -82,9 +79,6 @@ class MapModel extends Models:
 			self.bgs,
 			self.size_x,
 			self.size_y,
-			self.wild_encounter_rate,
-			self.min_wild_level,
-			self.max_wild_level,
 			self.created_at,
 			self.updated_at
 		]
