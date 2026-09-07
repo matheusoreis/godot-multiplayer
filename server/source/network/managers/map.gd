@@ -7,9 +7,8 @@ var _maps: Dictionary[int, Map] = {}
 var _map_repository: MapRepository
 
 
-func setup(map_repository: MapRepository) -> void:
+func _init(map_repository: MapRepository) -> void:
 	_map_repository = map_repository
-	await load_all_maps()
 
 
 func load_all_maps() -> void:

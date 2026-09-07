@@ -13,6 +13,9 @@ var _chat_event: ChatEvent
 var _account_repository: AccountRepository
 var _map_repository: MapRepository
 
+var _account_manager: AccountManager
+var _map_manager: MapManager
+
 
 func _ready() -> void:
 	if not await _setup_database():
@@ -20,6 +23,8 @@ func _ready() -> void:
 
 	if not _setup_network():
 		return
+
+	await _map_manager.load_all_maps()
 
 	_network.peer_connected.connect(_on_peer_connected)
 	_network.peer_disconnected.connect(_on_peer_disconnected)
@@ -87,6 +92,9 @@ func _setup_network() -> bool:
 	var chat_err: Error = _chat_event.register()
 	if chat_err != OK:
 		return false
+
+	_account_manager = AccountManager.new(_account_repository)
+	_map_manager = MapManager.new(_map_repository)
 
 	print("Servidor iniciado com sucesso!")
 	return true
