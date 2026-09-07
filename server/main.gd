@@ -5,6 +5,9 @@ class_name Main
 var _network: Network
 
 
+var _math_event: MathEvent
+
+
 func _ready() -> void:
 	if not _setup_network():
 		return
@@ -29,6 +32,11 @@ func _setup_network() -> bool:
 	var err: Error = _network.start(Constants.HOST, Constants.PORT, Constants.MAX_PEERS)
 	if err != OK:
 		push_error("Erro ao iniciar o servidor (%s)." % error_string(err))
+		return false
+
+	_math_event = MathEvent.new(_network)
+	var math_err: Error = _math_event.register()
+	if math_err != OK:
 		return false
 
 	print("Servidor iniciado com sucesso!")
