@@ -80,7 +80,6 @@ func enter_map() -> void:
 
 func leave_map(peer_id: int) -> void:
 	var account: Account = _account_manager.account(peer_id)
-
 	if account == null or not account.has_character():
 		return
 
