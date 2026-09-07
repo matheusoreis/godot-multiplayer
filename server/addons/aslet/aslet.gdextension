@@ -1,0 +1,12 @@
+[configuration]
+entry_symbol = "gdext_rust_init"
+compatibility_minimum = 4.1
+reloadable = true
+
+[libraries]
+windows.debug.x86_64 = "res://addons/aslet/windows/aslet.dll"
+windows.release.x86_64 = "res://addons/aslet/windows/aslet.dll"
+linux.debug.x86_64 = "res://addons/aslet/linux/aslet.so"
+linux.release.x86_64 = "res://addons/aslet/linux/aslet.so"
+macos.debug.arm64 = "res://addons/aslet/macos/aslet.dylib"
+macos.release.arm64 = "res://addons/aslet/macos/aslet.dylib"
