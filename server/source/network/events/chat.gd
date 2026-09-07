@@ -1,5 +1,5 @@
 extends Node
-class_name MathEvent
+class_name ChatEvent
 
 
 var _network: Network
@@ -11,19 +11,21 @@ func _init(network: Network) -> void:
 
 func register() -> Error:
 	return _network.register([
-		soma
+		map_message,
+		global_message
 	])
 
 
 func unregister() -> Error:
 	return _network.unregister([
-		soma
+		map_message,
+		global_message
 	])
 
 
-func soma(a: int, b: int) -> void:
-	var sender_id: int = _network.sender_id()
+func map_message() -> void:
+	pass
 
-	var resultado: int = a + b
 
-	_network.exec(sender_id, &"soma", [resultado])
+func global_message() -> void:
+	pass
