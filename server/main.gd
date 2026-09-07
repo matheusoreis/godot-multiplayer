@@ -3,8 +3,9 @@ class_name Main
 
 
 var _database: Database
-var _network: Network
+var _network: Multiplayer.Server
 
+var _loop: Loop
 
 var _account_event: AccountEvent
 var _map_event: MapEvent
@@ -26,15 +27,21 @@ func _ready() -> void:
 
 	await _map_manager.load_all_maps()
 
+	_setup_loop()
+
 	_network.peer_connected.connect(_on_peer_connected)
 	_network.peer_disconnected.connect(_on_peer_disconnected)
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if _database:
-		_database.poll(Constants.DATABASE_POLL_TIME)
+		_database.poll()
+
 	if _network:
 		_network.poll()
+
+	if _loop:
+		_loop.tick(delta)
 
 
 func _setup_database() -> bool:
@@ -66,17 +73,19 @@ func _setup_database() -> bool:
 
 
 func _setup_network() -> bool:
-	_network = Network.new()
+	_network = Multiplayer.Server.new()
 
-	print("Iniciando servidor em %s:%d" % [
-		Constants.HOST,
-		Constants.PORT,
+	print("Iniciando servidor em %s" % [
+		Constants.ENDPOINT,
 	])
 
-	var err: Error = _network.start(Constants.HOST, Constants.PORT, Constants.MAX_PEERS)
+	var err: Error = _network.start(Constants.ENDPOINT, Constants.MAX_PEERS)
 	if err != OK:
 		push_error("Erro ao iniciar o servidor (%s)." % error_string(err))
 		return false
+
+	_account_manager = AccountManager.new(_account_repository)
+	_map_manager = MapManager.new(_map_repository)
 
 	_account_event = AccountEvent.new(_network, _account_manager)
 	var account_err: Error = _account_event.register()
@@ -93,11 +102,12 @@ func _setup_network() -> bool:
 	if chat_err != OK:
 		return false
 
-	_account_manager = AccountManager.new(_account_repository)
-	_map_manager = MapManager.new(_map_repository)
-
 	print("Servidor iniciado com sucesso!")
 	return true
+
+
+func _setup_loop() -> void:
+	_loop = Loop.new()
 
 
 func _on_peer_connected(peer_id: int) -> void:

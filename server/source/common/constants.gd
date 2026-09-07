@@ -4,14 +4,9 @@ class_name Constants
 
 const DATABASE_PATH: String = "user://database/"
 const DATABASE_FILENAME: String = "database"
-const DATABASE_POLL_TIME: int = 1
 
 
-
-const HOST: String = "0.0.0.0"
-const PORT: int = 7001
-
-
+const ENDPOINT: String = "0.0.0.0:4242"
 const MAX_PEERS: int = 100
 
 
@@ -43,3 +38,12 @@ const PASSWORD_REGEX: String = "^(?=.*[0-9])(?=.*[!@#$%^&*(),.?\":{}|<>]).{4,}$"
 
 
 const AVALIABLE_SPRITES: Array[String] = ["fighter01", "fighter02"]
+
+
+const NPC_DECISION_INTERVAL_MIN: float = 2.0
+const NPC_DECISION_INTERVAL_MAX: float = 5.0
+
+const NPC_STEP_INTERVAL: float = 0.35
+
+const NPC_MIN_STEPS_PER_MOVE: int = 1
+const NPC_MAX_STEPS_PER_MOVE: int = 3
