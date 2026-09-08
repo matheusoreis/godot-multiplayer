@@ -58,7 +58,6 @@ const AVALIABLE_SPRITES: Array[String] = [
 	"lancer02",
 	"lancer03",
 	"lancer04",
-	"lancer05",
 	"mage01",
 	"mage02",
 	"mage03",

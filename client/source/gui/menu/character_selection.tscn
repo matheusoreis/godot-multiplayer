@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c00rqvtoedeyd" path="res://source/gui/menu/character_selection.gd" id="1_tif3r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hnrmn"]
-region = Rect2(66, 0, 64, 82)
+region = Rect2(32, 0, 32, 48)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
