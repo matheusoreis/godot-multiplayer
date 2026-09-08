@@ -11,7 +11,7 @@ var _network: Network.Client
 @export var _interfaces: Dictionary[StringName, Control]
 
 
-func _setup(network: Network.Client) -> void:
+func setup(network: Network.Client) -> void:
 	_network = network
 	network_ready.emit(network)
 

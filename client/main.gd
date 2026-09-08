@@ -21,6 +21,11 @@ func _ready() -> void:
 	_network.disconnected.connect(go_to_menu)
 
 
+func _physics_process(_delta: float) -> void:
+	if _network:
+		_network.poll()
+
+
 func _setup_network() -> bool:
 	_network = Network.Client.new()
 	_network.name = &"Network"
@@ -35,22 +40,22 @@ func _setup_network() -> bool:
 		push_error("Erro ao iniciar o cliente (%s)." % error_string(err))
 		return false
 
-	_action_event = ActionEvent.new(_network)
+	_action_event = ActionEvent.new(self, _network)
 	var action_err: Error = _action_event.register()
 	if action_err != OK:
 		return false
 
-	_account_event = AccountEvent.new(_network)
+	_account_event = AccountEvent.new(self, _network)
 	var account_err: Error = _account_event.register()
 	if account_err != OK:
 		return false
 
-	_map_event = MapEvent.new(_network)
+	_map_event = MapEvent.new(self, _network)
 	var map_err: Error = _map_event.register()
 	if map_err != OK:
 		return false
 
-	_chat_event = ChatEvent.new(_network)
+	_chat_event = ChatEvent.new(self, _network)
 	var chat_err: Error = _chat_event.register()
 	if chat_err != OK:
 		return false
@@ -69,7 +74,9 @@ func go_to_game() -> void:
 
 func _change_scene(scene_path: String) -> void:
 	var packed: PackedScene = load(scene_path)
-	var scene: Node = packed.instantiate()
+
+	var scene: Scene = packed.instantiate()
+	scene.setup(_network)
 
 	if current_scene != null:
 		current_scene.queue_free()

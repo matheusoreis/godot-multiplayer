@@ -1,7 +1,79 @@
 [gd_scene format=3 uid="uid://cbp2r63mkijox"]
 
 [ext_resource type="Script" uid="uid://bx5d7ud08w6hd" path="res://source/scene/menu/menu.gd" id="1_hnrmn"]
+[ext_resource type="PackedScene" uid="uid://fb6fmq6fj4lc" path="res://source/gui/menu/sign_in.tscn" id="2_exobi"]
+[ext_resource type="PackedScene" uid="uid://du2ytpclobsvh" path="res://source/gui/menu/sign_up.tscn" id="3_nb38h"]
+[ext_resource type="PackedScene" uid="uid://csw3dr1ekksx7" path="res://source/gui/menu/character_selection.tscn" id="4_o453f"]
+[ext_resource type="PackedScene" uid="uid://lwmj60fkxsah" path="res://source/gui/menu/character_creation.tscn" id="5_snuek"]
+[ext_resource type="PackedScene" uid="uid://j3qa4uulpffy" path="res://source/gui/shared/confirmation.tscn" id="6_s6vdn"]
 
-[node name="Menu" type="Node2D" unique_id=1426932483]
+[node name="Menu" type="Node2D" unique_id=1426932483 node_paths=PackedStringArray("_interfaces")]
 script = ExtResource("1_hnrmn")
+_interfaces = {
+&"CharacterCreation": NodePath("Canvas/CharacterCreation"),
+&"CharacterSelection": NodePath("Canvas/CharacterSelection"),
+&"Confirmation": NodePath("Canvas/Confirmation"),
+&"SignIn": NodePath("Canvas/SignIn"),
+&"SignUp": NodePath("Canvas/SignUp")
+}
 metadata/_custom_type_script = "uid://c0uikxaej1jws"
+
+[node name="Canvas" type="CanvasLayer" parent="." unique_id=421402781]
+
+[node name="SignIn" parent="Canvas" unique_id=164651717 instance=ExtResource("2_exobi")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -91.5
+offset_right = 125.0
+offset_bottom = 91.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SignUp" parent="Canvas" unique_id=1682101521 instance=ExtResource("3_nb38h")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -109.0
+offset_right = 125.0
+offset_bottom = 109.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CharacterSelection" parent="Canvas" unique_id=1943824170 instance=ExtResource("4_o453f")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -111.5
+offset_right = 100.0
+offset_bottom = 111.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CharacterCreation" parent="Canvas" unique_id=609627262 instance=ExtResource("5_snuek")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -129.5
+offset_right = 100.0
+offset_bottom = 129.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Confirmation" parent="Canvas" unique_id=1398550556 instance=ExtResource("6_s6vdn")]
+visible = false
