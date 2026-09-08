@@ -84,7 +84,7 @@ func _setup_network() -> bool:
 		Constants.ENDPOINT,
 	])
 
-	var err: Error = _network.start(Constants.ENDPOINT, Constants.MAX_PEERS)
+	var err: Error = _network.start(Constants.ENDPOINT, Constants.MAX_PEERS, (1024 * 4))
 	if err != OK:
 		push_error("Erro ao iniciar o servidor (%s)." % error_string(err))
 		return false
