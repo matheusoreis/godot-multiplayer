@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://j3qa4uulpffy"]
+
+[ext_resource type="Script" uid="uid://cmcfr7l63qwab" path="res://source/gui/shared/confirmation.gd" id="1_puo4a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_puo4a"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="Confirmation" type="Control" unique_id=1398550556]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_puo4a")
+
+[node name="Background" type="ColorRect" parent="." unique_id=677989155]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.16078432, 0.16078432, 0.16078432, 0.78431374)
+
+[node name="Center" type="CenterContainer" parent="." unique_id=455240616]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ConfirmPanel" type="PanelContainer" parent="Center" unique_id=355558253]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="Center/ConfirmPanel" unique_id=1645686983]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox1" type="VBoxContainer" parent="Center/ConfirmPanel/Margin" unique_id=736855795]
+layout_mode = 2
+
+[node name="Message" type="Label" parent="Center/ConfirmPanel/Margin/VBox1" unique_id=1792342923]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(380, 0)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBox1" type="HBoxContainer" parent="Center/ConfirmPanel/Margin/VBox1" unique_id=466123293]
+layout_mode = 2
+
+[node name="Confirm" type="Button" parent="Center/ConfirmPanel/Margin/VBox1/HBox1" unique_id=960064667]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Sim"
+
+[node name="Cancel" type="Button" parent="Center/ConfirmPanel/Margin/VBox1/HBox1" unique_id=506427918]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_puo4a")
+text = "Não"
+
+[connection signal="pressed" from="Center/ConfirmPanel/Margin/VBox1/HBox1/Confirm" to="." method="_on_confirm_pressed"]
+[connection signal="pressed" from="Center/ConfirmPanel/Margin/VBox1/HBox1/Cancel" to="." method="_on_cancel_pressed"]

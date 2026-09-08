@@ -23,6 +23,8 @@ func _ready() -> void:
 
 func _setup_network() -> bool:
 	_network = Network.Client.new()
+	_network.name = &"Network"
+	add_child(_network)
 
 	print("Iniciando cliente em %s" % [
 		Constants.ENDPOINT,

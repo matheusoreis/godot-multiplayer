@@ -2,6 +2,13 @@ extends Node
 class_name Constants
 
 
+const MAPS_DATA_DIRECTORY: String = "res://data/maps/"
+const TILESET_DATA_DIRECTORY: String = "res://data/tilesets/"
+
+const CHARACTER_SPRITE_DIRECTORY: String = "res://assets/gfx/characters/"
+const TILESET_SPRITE_DIRECTORY: String = "res://assets/gfx/tilesets/"
+
+
 const ENDPOINT: String = "127.0.0.1:4242"
 
 
@@ -26,3 +33,14 @@ const PASSWORD_REGEX: String = "^(?=.*[0-9])(?=.*[!@#$%^&*(),.?\":{}|<>]).{4,}$"
 
 
 const AVALIABLE_SPRITES: Array[String] = ["fighter01", "fighter02"]
+
+
+const SPRITESHEET_COLUMNS: int = 3
+const SPRITESHEET_ROWS: int = 4
+
+const ANIMATION_STEP_THRESHOLD: float = 0.5
+
+const WALKING_SPEED: float = 5.0
+const MAX_PENDING_MOVES: int = 32
+
+const WARP_COOLDOWN: float = 0.3

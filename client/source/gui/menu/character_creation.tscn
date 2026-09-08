@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://lwmj60fkxsah"]
+
+[ext_resource type="Script" uid="uid://c153w7ev0r884" path="res://source/gui/menu/character_creation.gd" id="1_exjvr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnrmn"]
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
+
+[node name="CharacterCreation" type="PanelContainer" unique_id=609627262]
+custom_minimum_size = Vector2(200, 0)
+offset_right = 200.0
+offset_bottom = 223.0
+script = ExtResource("1_exjvr")
+
+[node name="Margin" type="MarginContainer" parent="." unique_id=123146520]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox1" type="VBoxContainer" parent="Margin" unique_id=760256990]
+layout_mode = 2
+
+[node name="Identifier" type="LineEdit" parent="Margin/VBox1" unique_id=679991983]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBox1" type="HBoxContainer" parent="Margin/VBox1" unique_id=1614721057]
+layout_mode = 2
+alignment = 1
+
+[node name="Back" type="Button" parent="Margin/VBox1/HBox1" unique_id=1814143482]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Preview" type="TextureRect" parent="Margin/VBox1/HBox1" unique_id=1912624949]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+size_flags_horizontal = 3
+offset_transform_enabled = true
+offset_transform_scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_hnrmn")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="Next" type="Button" parent="Margin/VBox1/HBox1" unique_id=680678824]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="Separator2" type="HSeparator" parent="Margin/VBox1" unique_id=1780895689]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxEmpty_g4v7s")
+
+[node name="VBox1" type="VBoxContainer" parent="Margin/VBox1" unique_id=889811258]
+layout_mode = 2
+
+[node name="Confirm" type="Button" parent="Margin/VBox1/VBox1" unique_id=239601360]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Confirmar"
+
+[node name="Cancel" type="Button" parent="Margin/VBox1/VBox1" unique_id=1720163179]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancelar"
+
+[connection signal="pressed" from="Margin/VBox1/HBox1/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Margin/VBox1/HBox1/Next" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="Margin/VBox1/VBox1/Confirm" to="." method="_on_confirm_pressed"]
+[connection signal="pressed" from="Margin/VBox1/VBox1/Cancel" to="." method="_on_cancel_pressed"]

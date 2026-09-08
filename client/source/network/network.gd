@@ -1,4 +1,4 @@
-extends RefCounted
+extends Node
 class_name Network
 
 
@@ -67,9 +67,9 @@ func _validate_args(args_ty: Array[Variant.Type], args: Array) -> Error:
 class Client extends Network:
 	signal connected()
 	signal disconnected()
+	signal closed()
 
 	var _client: FramedClient
-
 	var _is_connected: bool
 
 
@@ -98,17 +98,16 @@ class Client extends Network:
 		return OK
 
 
-	func stop() -> Error:
+	func stop() -> void:
 		if not _client:
-			return FAILED
+			return
 
 		_client.disconnect_client()
 		if _is_connected:
 			await disconnected
 
 		_client = null
-
-		return OK
+		closed.emit()
 
 
 	func poll() -> void:
@@ -169,9 +168,9 @@ class Client extends Network:
 class Server extends Network:
 	signal peer_connected(peer_id: int)
 	signal peer_disconnected(peer_id: int)
+	signal closed()
 
 	var _server: FramedServer
-
 	var _sender_id: int
 	var _peer_ids: Array[int]
 
@@ -202,14 +201,16 @@ class Server extends Network:
 		return OK
 
 
-	func stop() -> Error:
+	func stop() -> void:
 		if not _server:
-			return FAILED
+			return
+
+		_server.close()
+		await _server.closed
 
 		_server = null
 		_peer_ids.clear()
-
-		return OK
+		closed.emit()
 
 
 	func poll() -> void:

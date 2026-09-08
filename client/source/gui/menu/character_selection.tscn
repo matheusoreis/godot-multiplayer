@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://csw3dr1ekksx7"]
+
+[ext_resource type="Script" uid="uid://c00rqvtoedeyd" path="res://source/gui/menu/character_selection.gd" id="1_tif3r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnrmn"]
+region = Rect2(66, 0, 64, 82)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
+
+[node name="CharacterSelection" type="PanelContainer" unique_id=1943824170]
+custom_minimum_size = Vector2(200, 0)
+offset_right = 200.0
+offset_bottom = 223.0
+script = ExtResource("1_tif3r")
+
+[node name="Margin" type="MarginContainer" parent="." unique_id=212038372]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox1" type="VBoxContainer" parent="Margin" unique_id=1099093771]
+layout_mode = 2
+
+[node name="HBox1" type="HBoxContainer" parent="Margin/VBox1" unique_id=1652388532]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="Margin/VBox1/HBox1" unique_id=1547196430]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+
+[node name="Identifier" type="Label" parent="Margin/VBox1/HBox1" unique_id=935420703]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Next" type="Button" parent="Margin/VBox1/HBox1" unique_id=517909545]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+
+[node name="Preview" type="TextureRect" parent="Margin/VBox1" unique_id=1773180095]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_hnrmn")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="Separator2" type="HSeparator" parent="Margin/VBox1" unique_id=587511452]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxEmpty_g4v7s")
+
+[node name="VBox1" type="VBoxContainer" parent="Margin/VBox1" unique_id=821695180]
+layout_mode = 2
+
+[node name="New" type="Button" parent="Margin/VBox1/VBox1" unique_id=910294431]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Novo"
+
+[node name="Select" type="Button" parent="Margin/VBox1/VBox1" unique_id=437210143]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Selecionar"
+
+[node name="Delete" type="Button" parent="Margin/VBox1/VBox1" unique_id=1706330209]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Apagar"
+
+[connection signal="pressed" from="Margin/VBox1/HBox1/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Margin/VBox1/HBox1/Next" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="Margin/VBox1/VBox1/New" to="." method="_on_new_pressed"]
+[connection signal="pressed" from="Margin/VBox1/VBox1/Select" to="." method="_on_select_pressed"]
+[connection signal="pressed" from="Margin/VBox1/VBox1/Delete" to="." method="_on_delete_pressed"]

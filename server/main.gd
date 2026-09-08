@@ -70,6 +70,8 @@ func _setup_database() -> bool:
 
 func _setup_network() -> bool:
 	_network = Network.Server.new()
+	_network.name = &"Network"
+	add_child(_network)
 
 	print("Iniciando servidor em %s" % [
 		Constants.ENDPOINT,
@@ -104,8 +106,7 @@ func _setup_network() -> bool:
 
 func _setup_loop() -> void:
 	_loop = Loop.new()
-	_loop.name = str(_loop.get_script().get_global_name())
-
+	_loop.name = &"Loop"
 	add_child(_loop)
 
 

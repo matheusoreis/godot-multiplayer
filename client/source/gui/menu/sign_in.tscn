@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://fb6fmq6fj4lc"]
+
+[ext_resource type="Script" uid="uid://bxacslowlyrl2" path="res://source/gui/menu/sign_in.gd" id="1_4364v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
+
+[node name="SignIn" type="PanelContainer" unique_id=164651717]
+custom_minimum_size = Vector2(250, 0)
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_4364v")
+
+[node name="Margin" type="MarginContainer" parent="." unique_id=1233698864]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox1" type="VBoxContainer" parent="Margin" unique_id=1080868287]
+layout_mode = 2
+
+[node name="Close" type="Button" parent="Margin/VBox1" unique_id=1162089078]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Separator1" type="HSeparator" parent="Margin/VBox1" unique_id=161302261]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxEmpty_g4v7s")
+
+[node name="Email" type="LineEdit" parent="Margin/VBox1" unique_id=907000606]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Password" type="LineEdit" parent="Margin/VBox1" unique_id=1402759597]
+unique_name_in_owner = true
+layout_mode = 2
+secret = true
+
+[node name="Separator2" type="HSeparator" parent="Margin/VBox1" unique_id=275514885]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxEmpty_g4v7s")
+
+[node name="HBox1" type="HBoxContainer" parent="Margin/VBox1" unique_id=1571041315]
+layout_mode = 2
+
+[node name="SignIn" type="Button" parent="Margin/VBox1/HBox1" unique_id=1089820442]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Acessar"
+
+[node name="SignUp" type="Button" parent="Margin/VBox1/HBox1" unique_id=941839825]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cadastrar"
+
+[connection signal="pressed" from="Margin/VBox1/Close" to="." method="_on_close_pressed"]
+[connection signal="pressed" from="Margin/VBox1/HBox1/SignIn" to="." method="_on_sign_in_pressed"]
+[connection signal="pressed" from="Margin/VBox1/HBox1/SignUp" to="." method="_on_sign_up_pressed"]
