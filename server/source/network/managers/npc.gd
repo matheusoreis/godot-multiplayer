@@ -3,13 +3,13 @@ class_name NpcManager
 
 
 var _map_manager: MapManager
-var _map_event: MapEvent
+var _npc_event: NpcEvent
 var _npc_repository: NpcRepository
 
 
-func _init(map_manager: MapManager, map_event: MapEvent, npc_repository: NpcRepository) -> void:
+func _init(map_manager: MapManager, npc_event: NpcEvent, npc_repository: NpcRepository) -> void:
 	_map_manager = map_manager
-	_map_event = map_event
+	_npc_event = npc_event
 	_npc_repository = npc_repository
 
 
@@ -48,10 +48,7 @@ func _tick_npc(npc: Npc, map: Map, delta: float) -> void:
 	if not npc.advance_timers(delta):
 		return
 
-	var direction: Vector2i = npc.peek_next_step()
-
-	if direction == Vector2i.ZERO:
-		return
+	var direction: Vector2i = npc.roll_step_direction()
 
 	if not map.can_pass(npc.cell, direction):
 		npc.consume_step(false)
@@ -60,4 +57,4 @@ func _tick_npc(npc: Npc, map: Map, delta: float) -> void:
 	npc.move(direction)
 	npc.consume_step(true)
 
-	_map_event.broadcast_npc_move(map, npc)
+	_npc_event.npc_moved(map, npc)

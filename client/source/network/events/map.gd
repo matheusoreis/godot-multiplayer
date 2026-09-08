@@ -1,6 +1,7 @@
 extends Node
 class_name MapEvent
 
+
 var _main: Main
 var _network: Network.Client
 
@@ -61,10 +62,7 @@ func map_data(id: int, identifier: String, bgm: String, bgs: String, size: Vecto
 
 	map_instance.setup(id, identifier, bgm, bgs, size)
 
-	# collisions já é Dictionary, só atribui
 	map_instance.import_collisions(collisions)
-
-	# warps já é Dictionary, só atribui
 	map_instance.import_warps(warps)
 
 	var character_path: String = "res://source/gameplay/entity/character/character.tscn"
@@ -95,6 +93,33 @@ func map_data(id: int, identifier: String, bgm: String, bgs: String, size: Vecto
 		)
 
 		map_instance.add_character(character)
+
+	var npc_path: String = "res://source/gameplay/entity/npc/npc.tscn"
+
+	if not ResourceLoader.exists(npc_path):
+		push_error("Cena do NPC não encontrada: ", npc_path)
+	else:
+		var packed_npc: PackedScene = load(npc_path)
+
+		if not packed_npc:
+			push_error("Falha ao carregar cena do NPC: ", npc_path)
+		else:
+			for data in npcs:
+				var npc: Npc = packed_npc.instantiate()
+
+				if npc == null:
+					continue
+
+				npc.setup(
+					data[0],
+					data[1],
+					data[2],
+					id,
+					data[3],
+					data[4]
+				)
+
+				map_instance.add_npc(npc)
 
 	(scene as Game).current_map = map_instance
 	(scene as Game).add_child(map_instance)

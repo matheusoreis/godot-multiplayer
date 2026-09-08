@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cvi47a77calbv"]
+
+[ext_resource type="PackedScene" uid="uid://w21ggvhwrfi0" path="res://source/gameplay/entity/entity.tscn" id="1_sakvt"]
+[ext_resource type="Script" uid="uid://b4tu24d4v00q6" path="res://source/gameplay/entity/npc/npc.gd" id="2_damm8"]
+
+[node name="Entity" unique_id=1747701998 instance=ExtResource("1_sakvt")]
+script = ExtResource("2_damm8")

@@ -20,6 +20,7 @@ var warps: Dictionary[Vector2i, Array]
 @export var warps_data: Array[MapWarp] = []
 
 var characters: Dictionary[int, Character]
+var npcs: Dictionary[int, Npc]
 
 
 func setup(id: int, identifier: String, bgm: String, bgs: String, size: Vector2i) -> void:
@@ -33,6 +34,7 @@ func setup(id: int, identifier: String, bgm: String, bgs: String, size: Vector2i
 
 	collisions.clear()
 	warps.clear()
+	npcs.clear()
 
 
 func import_collisions(collisions_data: Dictionary) -> void:
@@ -51,7 +53,7 @@ func has_warp(cell: Vector2i) -> bool:
 	return warps.has(cell)
 
 
-func get_warp(cell: Vector2i) -> Array:  # ← RETORNA ARRAY!
+func get_warp(cell: Vector2i) -> Array:
 	return warps.get(cell, [])
 
 
@@ -158,6 +160,32 @@ func get_characters_at(cell: Vector2i) -> Array[Character]:
 	for character: Character in characters.values():
 		if character.get_cell() == cell:
 			result.append(character)
+	return result
+
+
+func add_npc(npc: Npc) -> void:
+	npcs[npc.id] = npc
+
+	add_child(npc)
+	npc.position = to_screen(npc.cell)
+
+
+func remove_npc(npc_id: int) -> void:
+	var npc: Npc = npcs.get(npc_id)
+	if not npc:
+		return
+
+	remove_child(npc)
+	npcs.erase(npc_id)
+
+
+func get_npc(npc_id: int) -> Npc:
+	return npcs.get(npc_id)
+
+
+func get_npcs() -> Array[Npc]:
+	var result: Array[Npc] = []
+	result.assign(npcs.values())
 	return result
 
 

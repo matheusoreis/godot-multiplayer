@@ -3,12 +3,10 @@ class_name Loop
 
 
 class Task:
-	var timer: Timer
-	var callback: Callable
 	var interval: float
+	var callback: Callable
 
-	func _init(timer: Timer, interval: float, callback: Callable):
-		self.timer = timer
+	func _init(interval: float, callback: Callable) -> void:
 		self.interval = interval
 		self.callback = callback
 
@@ -19,28 +17,32 @@ var _tasks: Dictionary[StringName, Task] = {}
 func add(identifier: StringName, interval: float, callback: Callable) -> void:
 	remove(identifier)
 
-	var timer = get_tree().create_timer(interval, false)
-	var task = Task.new(timer, interval, callback)
-
-	timer.timeout.connect(_on_timeout.bind(identifier))
-
+	var task: Task = Task.new(interval, callback)
 	_tasks[identifier] = task
+
+	_schedule(identifier)
 
 
 func remove(identifier: StringName) -> void:
-	var task = _tasks.get(identifier)
-	if not task:
-		return
-
-	task.timer.timeout.disconnect_all()
-	task.timer.queue_free()
 	_tasks.erase(identifier)
 
 
+func _schedule(identifier: StringName) -> void:
+	var task: Task = _tasks.get(identifier)
+
+	if not task:
+		return
+
+	var timer: SceneTreeTimer = get_tree().create_timer(task.interval, false)
+	timer.timeout.connect(_on_timeout.bind(identifier))
+
+
 func _on_timeout(identifier: StringName) -> void:
-	var task = _tasks.get(identifier)
+	var task: Task = _tasks.get(identifier)
+
 	if not task:
 		return
 
 	task.callback.call(task.interval)
-	task.timer.start(task.interval)
+
+	_schedule(identifier)

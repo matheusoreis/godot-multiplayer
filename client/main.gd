@@ -7,8 +7,8 @@ var _network: Network.Client
 var _action_event: ActionEvent
 var _account_event: AccountEvent
 var _map_event: MapEvent
+var _npc_event: NpcEvent
 var _chat_event: ChatEvent
-
 
 var current_scene: Scene
 
@@ -55,6 +55,11 @@ func _setup_network() -> bool:
 	if map_err != OK:
 		return false
 
+	_npc_event = NpcEvent.new(self, _network)
+	var npc_err: Error = _npc_event.register()
+	if npc_err != OK:
+		return false
+
 	_chat_event = ChatEvent.new(self, _network)
 	var chat_err: Error = _chat_event.register()
 	if chat_err != OK:
@@ -74,8 +79,8 @@ func go_to_game() -> void:
 
 func _change_scene(scene_path: String) -> void:
 	var packed: PackedScene = load(scene_path)
-
 	var scene: Scene = packed.instantiate()
+
 	scene.setup(_network)
 
 	if current_scene != null:
@@ -83,8 +88,7 @@ func _change_scene(scene_path: String) -> void:
 
 	var class_name_str: String = scene.get_script().get_global_name()
 	scene.name = class_name_str
-
 	current_scene = scene
-	add_child(scene)
 
+	add_child(scene)
 	scene.setup(_network)

@@ -7,15 +7,19 @@ var _network: Network.Server
 
 var _loop: Loop
 
+
 var _account_event: AccountEvent
 var _map_event: MapEvent
 var _chat_event: ChatEvent
+var _npc_event: NpcEvent
 
 var _account_repository: AccountRepository
 var _map_repository: MapRepository
+var _npc_repository: NpcRepository
 
 var _account_manager: AccountManager
 var _map_manager: MapManager
+var _npc_manager: NpcManager
 
 
 func _ready() -> void:
@@ -26,6 +30,7 @@ func _ready() -> void:
 		return
 
 	await _map_manager.load_all_maps()
+	await _npc_manager.load_all_npcs()
 
 	_setup_loop()
 
@@ -36,7 +41,6 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if _database:
 		_database.poll()
-
 	if _network:
 		_network.poll()
 
@@ -63,6 +67,9 @@ func _setup_database() -> bool:
 
 	_map_repository = MapRepository.new()
 	await _map_repository.setup(_database)
+
+	_npc_repository = NpcRepository.new()
+	await _npc_repository.setup(_database)
 
 	print("Banco de dados iniciado com sucesso!")
 	return true
@@ -100,6 +107,9 @@ func _setup_network() -> bool:
 	if chat_err != OK:
 		return false
 
+	_npc_event = NpcEvent.new(_network, _account_manager)
+	_npc_manager = NpcManager.new(_map_manager, _npc_event, _npc_repository)
+
 	print("Servidor iniciado com sucesso!")
 	return true
 
@@ -108,6 +118,10 @@ func _setup_loop() -> void:
 	_loop = Loop.new()
 	_loop.name = &"Loop"
 	add_child(_loop)
+
+	_loop.add(&"npc_tick", Constants.NPC_STEP_INTERVAL, func(delta: float) -> void:
+		_npc_manager.tick(delta)
+	)
 
 
 func _on_peer_connected(peer_id: int) -> void:

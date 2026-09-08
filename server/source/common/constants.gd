@@ -82,10 +82,12 @@ const AVALIABLE_SPRITES: Array[String] = [
 ]
 
 
-const NPC_DECISION_INTERVAL_MIN: float = 2.0
-const NPC_DECISION_INTERVAL_MAX: float = 5.0
+const CHARACTER_STEP_INTERVAL_MS: int = 200
 
-const NPC_STEP_INTERVAL: float = 0.35
+const NPC_DECISION_INTERVAL_MIN: float = 1.0
+const NPC_DECISION_INTERVAL_MAX: float = 3.0
+
+const NPC_STEP_INTERVAL: float = 0.2
 
 const NPC_MIN_STEPS_PER_MOVE: int = 1
-const NPC_MAX_STEPS_PER_MOVE: int = 3
+const NPC_MAX_STEPS_PER_MOVE: int = 10

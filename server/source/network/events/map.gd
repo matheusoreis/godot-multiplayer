@@ -99,6 +99,10 @@ func move_character(direction: Vector2i) -> void:
 		return
 
 	var character: Character = account.character
+
+	if not character.can_move_now():
+		return
+
 	var map: Map = _map_manager.map(character.map)
 
 	if map == null:
@@ -110,6 +114,7 @@ func move_character(direction: Vector2i) -> void:
 		return
 
 	character.move(direction)
+	character.consume_move(Constants.CHARACTER_STEP_INTERVAL_MS)
 
 	var targets: Array = _peers_in_map(map.id)
 	targets.erase(sender_id)
@@ -119,15 +124,6 @@ func move_character(direction: Vector2i) -> void:
 
 	if map.has_warp(character.cell):
 		_apply_warp(sender_id, character, map)
-
-
-func broadcast_npc_move(map: Map, npc: Npc) -> void:
-	var targets: Array = _peers_in_map(map.id)
-
-	if targets.is_empty():
-		return
-
-	_network.exec(targets, &"move_npc", [npc.id, npc.cell, npc.facing])
 
 
 func _apply_warp(peer_id: int, character: Character, current_map: Map) -> void:
