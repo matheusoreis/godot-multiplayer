@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://2hkbiwnp1kre"]
+
+[ext_resource type="Script" uid="uid://bavcmx0pay0a1" path="res://source/gameplay/map/map.gd" id="1_4cnpj"]
+
+[node name="Map" type="Node2D" unique_id=1162608983 node_paths=PackedStringArray("tilemap_layers")]
+y_sort_enabled = true
+script = ExtResource("1_4cnpj")
+tilemap_layers = [NodePath("Ground1"), NodePath("Ground2"), NodePath("Below1"), NodePath("Below2"), NodePath("Above1"), NodePath("Above2")]
+
+[node name="Ground1" type="TileMapLayer" parent="." unique_id=2100489226]
+
+[node name="Ground2" type="TileMapLayer" parent="." unique_id=1308448463]
+
+[node name="Below1" type="TileMapLayer" parent="." unique_id=879887896]
+
+[node name="Below2" type="TileMapLayer" parent="." unique_id=998126356]
+
+[node name="Above1" type="TileMapLayer" parent="." unique_id=1329314556]
+y_sort_enabled = true
+
+[node name="Above2" type="TileMapLayer" parent="." unique_id=475632927]
+y_sort_enabled = true

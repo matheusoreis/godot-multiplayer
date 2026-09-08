@@ -26,8 +26,6 @@ func unregister() -> Error:
 
 func confirmation(code: String) -> void:
 	var scene: Scene = _main.current_scene
-	if scene is not Menu:
-		return
 
 	var confirmation_ui: ConfirmationUi = scene.get_interface(&"Confirmation")
 

@@ -43,7 +43,6 @@ func map_data() -> void:
 		return
 
 	var map: Map = _map_manager.map(account.character.map)
-
 	if map == null:
 		_network.exec(sender_id, &"confirmation", ["MAP_NOT_FOUND"])
 		return
@@ -159,7 +158,6 @@ func _apply_warp(peer_id: int, character: Character, current_map: Map) -> void:
 
 func _send_map_data(peer_id: int, map_id: int) -> void:
 	var map: Map = _map_manager.map(map_id)
-
 	if map == null:
 		return
 
