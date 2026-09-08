@@ -33,15 +33,12 @@ func _ready() -> void:
 	_network.peer_disconnected.connect(_on_peer_disconnected)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if _database:
 		_database.poll()
 
 	if _network:
 		_network.poll()
-
-	if _loop:
-		_loop.tick(delta)
 
 
 func _setup_database() -> bool:
@@ -69,7 +66,6 @@ func _setup_database() -> bool:
 
 	print("Banco de dados iniciado com sucesso!")
 	return true
-
 
 
 func _setup_network() -> bool:
@@ -108,6 +104,9 @@ func _setup_network() -> bool:
 
 func _setup_loop() -> void:
 	_loop = Loop.new()
+	_loop.name = str(_loop.get_script().get_global_name())
+
+	add_child(_loop)
 
 
 func _on_peer_connected(peer_id: int) -> void:

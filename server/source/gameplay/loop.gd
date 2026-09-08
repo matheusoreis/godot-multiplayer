@@ -2,45 +2,45 @@ extends Node
 class_name Loop
 
 
-class LoopTask extends RefCounted:
-	var identifier: StringName
-	var interval: float
+class Task:
+	var timer: Timer
 	var callback: Callable
-	var accumulator: float = 0.0
+	var interval: float
 
-	func _init(identifier: StringName, interval: float, callback: Callable) -> void:
-		self.identifier = identifier
+	func _init(timer: Timer, interval: float, callback: Callable):
+		self.timer = timer
 		self.interval = interval
 		self.callback = callback
 
 
-var _tasks: Dictionary[StringName, LoopTask] = {}
+var _tasks: Dictionary[StringName, Task] = {}
 
 
 func add(identifier: StringName, interval: float, callback: Callable) -> void:
-	_tasks[identifier] = LoopTask.new(identifier, interval, callback)
+	remove(identifier)
+
+	var timer = get_tree().create_timer(interval, false)
+	var task = Task.new(timer, interval, callback)
+
+	timer.timeout.connect(_on_timeout.bind(identifier))
+
+	_tasks[identifier] = task
 
 
 func remove(identifier: StringName) -> void:
+	var task = _tasks.get(identifier)
+	if not task:
+		return
+
+	task.timer.timeout.disconnect_all()
+	task.timer.queue_free()
 	_tasks.erase(identifier)
 
 
-func has(identifier: StringName) -> bool:
-	return _tasks.has(identifier)
+func _on_timeout(identifier: StringName) -> void:
+	var task = _tasks.get(identifier)
+	if not task:
+		return
 
-
-func set_interval(identifier: StringName, interval: float) -> void:
-	var task: LoopTask = _tasks.get(identifier)
-
-	if task:
-		task.interval = interval
-
-
-func tick(delta: float) -> void:
-	for task: LoopTask in _tasks.values():
-		task.accumulator += delta
-
-		if task.accumulator >= task.interval:
-			var elapsed: float = task.accumulator
-			task.accumulator = 0.0
-			task.callback.call(elapsed)
+	task.callback.call(task.interval)
+	task.timer.start(task.interval)
