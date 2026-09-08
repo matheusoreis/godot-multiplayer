@@ -37,7 +37,50 @@ const EMAIL_REGEX: String = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
 const PASSWORD_REGEX: String = "^(?=.*[0-9])(?=.*[!@#$%^&*(),.?\":{}|<>]).{4,}$"
 
 
-const AVALIABLE_SPRITES: Array[String] = ["fighter01", "fighter02"]
+const AVALIABLE_SPRITES: Array[String] = [
+	"cleric01",
+	"cleric02",
+	"cleric03",
+	"cleric04",
+	"cleric05",
+	"cleric06",
+	"cleric07",
+	"cleric08",
+	"fighter01",
+	"fighter02",
+	"fighter03",
+	"fighter04",
+	"fighter05",
+	"fighter06",
+	"fighter07",
+	"fighter08",
+	"gunner01",
+	"gunner02",
+	"hunter01",
+	"hunter02",
+	"hunter03",
+	"lancer01",
+	"lancer02",
+	"lancer03",
+	"lancer04",
+	"lancer05",
+	"mage01",
+	"mage02",
+	"mage03",
+	"mage04",
+	"mage05",
+	"mage06",
+	"mage07",
+	"mage08",
+	"mage09",
+	"thief01",
+	"thief02",
+	"thief03",
+	"thief04",
+	"warrior01",
+	"warrior02",
+	"warrior03"
+]
 
 
 const NPC_DECISION_INTERVAL_MIN: float = 2.0

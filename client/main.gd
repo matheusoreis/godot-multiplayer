@@ -86,3 +86,5 @@ func _change_scene(scene_path: String) -> void:
 
 	current_scene = scene
 	add_child(scene)
+
+	scene.setup(_network)
