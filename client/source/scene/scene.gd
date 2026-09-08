@@ -2,30 +2,18 @@ extends Node2D
 class_name Scene
 
 
-var network: Network.Client
+signal network_ready(network: Network.Client)
 
+
+var _network: Network.Client
 
 @export_category("Controls")
 @export var _interfaces: Dictionary[StringName, Control]
 
 
-func add_interface(identifier: StringName, interface: Control) -> void:
-	if is_instance_valid(interface) == false:
-		return
-
-	if _interfaces.has(identifier):
-		return
-
-	_interfaces[identifier] = interface
-
-
-func remove_interface(identifier: StringName) -> void:
-	var interface: Control = get_interface(identifier)
-	if interface == null:
-		return
-
-	_interfaces.erase(identifier)
-	interface.queue_free()
+func _setup(network: Network.Client) -> void:
+	_network = network
+	network_ready.emit(network)
 
 
 func get_interface(identifier: StringName) -> Control:
