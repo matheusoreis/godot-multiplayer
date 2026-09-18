@@ -16,6 +16,6 @@ Thumbs.db
 *.tmp
 *.log
 
-*.dll
-*.so
-*.dylib
+~*.dll
+~*.so
+~*.dylib
