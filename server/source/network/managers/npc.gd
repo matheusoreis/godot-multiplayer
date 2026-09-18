@@ -40,21 +40,17 @@ func load_all_npcs() -> void:
 
 func tick(delta: float) -> void:
 	for map in _map_manager.all():
-		for npc in map.npcs.values():
-			_tick_npc(npc, map, delta)
+		for npc: Npc in map.npcs.values():
+			if not npc.advance_timers(delta):
+				return
 
+			var direction: Vector2i = npc.roll_step_direction()
 
-func _tick_npc(npc: Npc, map: Map, delta: float) -> void:
-	if not npc.advance_timers(delta):
-		return
+			if not map.can_pass(npc.cell, direction):
+				npc.consume_step(false)
+				return
 
-	var direction: Vector2i = npc.roll_step_direction()
+			npc.move(direction)
+			npc.consume_step(true)
 
-	if not map.can_pass(npc.cell, direction):
-		npc.consume_step(false)
-		return
-
-	npc.move(direction)
-	npc.consume_step(true)
-
-	_npc_event.npc_moved(map, npc)
+			_npc_event.npc_moved(map, npc)
