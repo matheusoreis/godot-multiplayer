@@ -329,4 +329,11 @@ Este projeto segue uma abordagem bem comum em jogos multiplayer: o cliente é um
 
 A combinação de `Framed` e `Aslet` cria uma estrutura que mantém o código modular, facilita a compreensão e dá uma base sólida para continuar evoluindo o jogo.
 
-Agradecimento especiais ao https://github.com/carabalonepaulo/ pelo ótimo trabalho no `Framed` que possibilitou um Network de forma estável e veloz, e `Aslet` por ter possíbilitado SQLite de forma async na godot, sem você esse projeto não estaria no estado atual!
+Agradecimento especiais ao [Paulo Carabalone](https://github.com/carabalonepaulo/) pelo ótimo trabalho no `Framed` que possibilitou um Network de forma estável e veloz, e `Aslet` por ter possíbilitado SQLite de forma async na godot, sem você esse projeto não estaria no estado atual.
+
+![Screenshot 1](https://github.com/matheusoreis/godot-multiplayer/blob/main/imgs/screenshot_1.png)
+![Screenshot 2](https://github.com/matheusoreis/godot-multiplayer/blob/main/imgs/screenshot_2.png)
+![Screenshot 3](https://github.com/matheusoreis/godot-multiplayer/blob/main/imgs/screenshot_3.png)
+![Screenshot 4](https://github.com/matheusoreis/godot-multiplayer/blob/main/imgs/screenshot_4.png)
+![Screenshot 5](https://github.com/matheusoreis/godot-multiplayer/blob/main/imgs/screenshot_5.png)
+![Screenshot 6](https://github.com/matheusoreis/godot-multiplayer/blob/main/imgs/screenshot_6.png)
