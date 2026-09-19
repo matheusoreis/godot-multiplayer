@@ -89,7 +89,8 @@ func map_data(id: int, identifier: String, bgm: String, bgs: String, size: Vecto
 			data[2],
 			data[3],
 			data[4],
-			data[5]
+			data[5],
+			data[6]
 		)
 
 		map_instance.add_character(character)
@@ -161,7 +162,8 @@ func character_data(data: Array) -> void:
 		data[2],
 		data[3],
 		data[4],
-		data[5]
+		data[5],
+		data[6]
 	)
 
 	var map_pixel_size: Vector2i = map.pixel_size()
@@ -209,7 +211,8 @@ func character_to_characters(data: Array) -> void:
 		data[2],
 		data[3],
 		data[4],
-		data[5]
+		data[5],
+		data[6]
 	)
 
 	(scene as Game).current_map.add_character(character)

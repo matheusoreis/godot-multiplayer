@@ -30,6 +30,7 @@ func setup(database: Database) -> void:
 			cell_y INTEGER NOT NULL,
 			facing_x INTEGER NOT NULL,
 			facing_y INTEGER NOT NULL,
+			role INTEGER NOT NULL DEFAULT 0,
 			access_at INTEGER NOT NULL DEFAULT 0,
 			created_at INTEGER NOT NULL DEFAULT 0,
 			updated_at INTEGER NOT NULL DEFAULT 0,
@@ -133,6 +134,18 @@ func update_character_updated_at(character_id: int) -> void:
 	)
 
 
+func update_character_role(character_id: int, role: int) -> Array:
+	var result: Error = await _database.exec(
+		"UPDATE characters SET role = ?, updated_at = ? WHERE id = ?",
+		[role, _database.now(), character_id]
+	)
+
+	if result != OK:
+		return [ERR_DATABASE_CANT_WRITE, "DATABASE_ERROR"]
+
+	return [OK, null]
+
+
 func get_characters(account_id: int) -> Array[Models.CharacterModel]:
 	var rows: Array[Models] = await _database.rows(
 		"SELECT * FROM characters WHERE account_id = ? ORDER BY id",
@@ -191,8 +204,9 @@ func create_character(account_id: int, identifier: String, spritesheet: String) 
 	var result: Error = await _database.exec(
 		"""
 		INSERT INTO characters (
-			identifier, account_id, spritesheet, map_id, cell_x, cell_y, facing_x, facing_y, created_at, updated_at
-		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			identifier, account_id, spritesheet, map_id, cell_x, cell_y,
+			facing_x, facing_y, role, created_at, updated_at
+		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		""",
 		[
 			identifier,
@@ -203,6 +217,7 @@ func create_character(account_id: int, identifier: String, spritesheet: String) 
 			Constants.START_MAP_POSITION.y,
 			Constants.START_MAP_FACING.x,
 			Constants.START_MAP_FACING.y,
+			Constants.ROLE_NONE,
 			now,
 			now
 		]

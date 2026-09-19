@@ -91,3 +91,8 @@ const NPC_STEP_INTERVAL: float = 0.2
 
 const NPC_MIN_STEPS_PER_MOVE: int = 1
 const NPC_MAX_STEPS_PER_MOVE: int = 10
+
+
+const ROLE_NONE: int = 0
+const ROLE_MODERATOR: int = 1
+const ROLE_ADMIN: int = 2

@@ -40,6 +40,7 @@ class CharacterModel extends Models:
 	var cell_y: int
 	var facing_x: int
 	var facing_y: int
+	var role: int
 	var access_at: int
 	var created_at: int
 	var updated_at: int
@@ -55,6 +56,7 @@ class CharacterModel extends Models:
 			self.cell_y,
 			self.facing_x,
 			self.facing_y,
+			self.role,
 			self.access_at,
 			self.created_at,
 			self.updated_at

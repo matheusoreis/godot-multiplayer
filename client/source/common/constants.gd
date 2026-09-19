@@ -86,3 +86,8 @@ const WALKING_SPEED: float = 5.0
 const MAX_PENDING_MOVES: int = 32
 
 const WARP_COOLDOWN: float = 0.3
+
+
+const ROLE_NONE: int = 0
+const ROLE_MODERATOR: int = 1
+const ROLE_ADMIN: int = 2

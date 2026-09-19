@@ -165,6 +165,7 @@ func _hydrate_character(model: Models.CharacterModel) -> Character:
 		Vector2i(model.cell_x, model.cell_y),
 		Vector2i(model.facing_x, model.facing_y),
 		model.account_id,
+		model.role,
 		model.access_at,
 		model.created_at,
 		model.updated_at

@@ -11,15 +11,21 @@ var _is_transitioning: bool = false
 var _warp_cooldown: float = 0.0
 
 
+var role: int
+
+
 func setup(
 	id: int,
 	identifier: String,
 	spritesheet: String,
 	map: int,
 	cell: Vector2i,
-	facing: Vector2i
+	facing: Vector2i,
+	role: int = Constants.ROLE_NONE
 ) -> void:
 	super.setup(id, identifier, spritesheet, map, cell, facing)
+
+	self.role = role
 
 	_queue = Queue.new(Constants.MAX_PENDING_MOVES)
 	_animator = CharacterAnimator.new(%Sprite2D)
@@ -43,6 +49,14 @@ func is_transitioning() -> bool:
 
 func is_warping() -> bool:
 	return _warp_cooldown > 0.0
+
+
+func is_admin() -> bool:
+	return role >= Constants.ROLE_ADMIN
+
+
+func is_moderator() -> bool:
+	return role >= Constants.ROLE_MODERATOR
 
 
 func start_warp_cooldown() -> void:

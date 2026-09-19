@@ -21,7 +21,9 @@ func register() -> Error:
 	return _network.register([
 		map_data,
 		enter_map,
-		move_character
+		move_character,
+		import_collisions,
+		import_warps
 	])
 
 
@@ -29,8 +31,11 @@ func unregister() -> Error:
 	return _network.unregister([
 		map_data,
 		enter_map,
-		move_character
+		move_character,
+		import_collisions,
+		import_warps
 	])
+
 
 
 func map_data() -> void:
@@ -65,7 +70,8 @@ func enter_map() -> void:
 		account.character.spritesheet,
 		account.character.map,
 		account.character.cell,
-		account.character.facing
+		account.character.facing,
+		account.character.role
 	]
 
 	_network.exec(sender_id, &"character_data", [character_data])
@@ -122,6 +128,60 @@ func move_character(direction: Vector2i) -> void:
 		_apply_warp(sender_id, character, map)
 
 
+func import_collisions(collisions_data: Array) -> void:
+	var sender_id: int = _network.sender_id()
+
+	var account: Account = _account_manager.account(sender_id)
+
+	if account == null or not account.has_character():
+		_network.exec(sender_id, &"confirmation", ["NO_CHARACTER_SELECTED"])
+		return
+
+	if not account.character.is_admin():
+		_network.exec(sender_id, &"confirmation", ["NOT_AUTHORIZED"])
+		return
+
+	var map: Map = _map_manager.map(account.character.map)
+	if map == null:
+		_network.exec(sender_id, &"confirmation", ["MAP_NOT_FOUND"])
+		return
+
+	var result: Array = await _map_manager.import_collisions(map.id, collisions_data)
+
+	if result[0] != OK:
+		_network.exec(sender_id, &"confirmation", [result[1]])
+		return
+
+	_network.exec(sender_id, &"confirmation", ["COLLISIONS_IMPORTED"])
+
+
+func import_warps(warps_data: Array) -> void:
+	var sender_id: int = _network.sender_id()
+
+	var account: Account = _account_manager.account(sender_id)
+
+	if account == null or not account.has_character():
+		_network.exec(sender_id, &"confirmation", ["NO_CHARACTER_SELECTED"])
+		return
+
+	if not account.character.is_admin():
+		_network.exec(sender_id, &"confirmation", ["NOT_AUTHORIZED"])
+		return
+
+	var map: Map = _map_manager.map(account.character.map)
+	if map == null:
+		_network.exec(sender_id, &"confirmation", ["MAP_NOT_FOUND"])
+		return
+
+	var result: Array = await _map_manager.import_warps(map.id, warps_data)
+
+	if result[0] != OK:
+		_network.exec(sender_id, &"confirmation", [result[1]])
+		return
+
+	_network.exec(sender_id, &"confirmation", ["WARPS_IMPORTED"])
+
+
 func _apply_warp(peer_id: int, character: Character, current_map: Map) -> void:
 	var warp_data: Array = current_map.get_warp(character.cell)
 
@@ -170,7 +230,8 @@ func _send_map_data(peer_id: int, map_id: int) -> void:
 			other_account.character.spritesheet,
 			other_account.character.map,
 			other_account.character.cell,
-			other_account.character.facing
+			other_account.character.facing,
+			other_account.character.role
 		])
 
 	var npcs: Array = []

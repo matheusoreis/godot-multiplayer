@@ -154,3 +154,120 @@ func delete_warps_by_map(map_id: int) -> Array:
 	map.warps.clear()
 
 	return [OK, null]
+
+
+func import_collisions(map_id: int, collisions_data: Array) -> Array:
+	var map: Map = _maps.get(map_id)
+
+	if map == null:
+		return [ERR_DOES_NOT_EXIST, "MAP_NOT_FOUND"]
+
+	var parsed: Dictionary[Vector2i, int] = {}
+
+	for entry in collisions_data:
+		var cell: Vector2i = entry[0]
+		var flag: int = entry[1]
+
+		if not map.is_within_bounds(cell):
+			continue
+
+		parsed[cell] = flag
+
+	var delete_result: bool = await _map_repository.delete_collisions_by_map(map_id)
+	if not delete_result:
+		return [ERR_DATABASE_CANT_WRITE, "DATABASE_ERROR"]
+
+	for cell: Vector2i in parsed:
+		var insert_result: bool = await _map_repository.insert_collision(map_id, cell, parsed[cell])
+
+		if not insert_result:
+			await _reload_collisions(map)
+			return [ERR_DATABASE_CANT_WRITE, "DATABASE_ERROR"]
+
+	map.collisions.clear()
+	map.collisions.assign(parsed)
+
+	return [OK, null]
+
+
+func import_warps(map_id: int, warps_data: Array) -> Array:
+	var map: Map = _maps.get(map_id)
+
+	if map == null:
+		return [ERR_DOES_NOT_EXIST, "MAP_NOT_FOUND"]
+
+	var parsed: Dictionary[Vector2i, Array] = {}
+
+	for entry in warps_data:
+		var from_cell: Vector2i = entry[0]
+		var to_map_id: int = entry[1]
+		var to_cell: Vector2i = entry[2]
+		var to_facing: Vector2i = entry[3]
+
+		if not map.is_within_bounds(from_cell):
+			continue
+
+		var to_map: Map = _maps.get(to_map_id)
+		if to_map == null:
+			continue
+
+		if not to_map.is_within_bounds(to_cell):
+			continue
+
+		parsed[from_cell] = [
+			to_map_id,
+			to_cell.x,
+			to_cell.y,
+			to_facing.x,
+			to_facing.y
+		]
+
+	var delete_result: bool = await _map_repository.delete_warps_by_map(map_id)
+	if not delete_result:
+		return [ERR_DATABASE_CANT_WRITE, "DATABASE_ERROR"]
+
+	for from_cell: Vector2i in parsed:
+		var warp: Array = parsed[from_cell]
+
+		var insert_result: bool = await _map_repository.insert_warp(
+			map_id,
+			from_cell,
+			warp[0],
+			Vector2i(warp[1], warp[2]),
+			Vector2i(warp[3], warp[4])
+		)
+
+		if not insert_result:
+			await _reload_warps(map)
+			return [ERR_DATABASE_CANT_WRITE, "DATABASE_ERROR"]
+
+	map.warps.clear()
+	map.warps.assign(parsed)
+
+	return [OK, null]
+
+
+func _reload_collisions(map: Map) -> void:
+	var models: Array[Models.MapCollisionModel] = await _map_repository.get_collisions(map.id)
+
+	map.collisions.clear()
+
+	for model in models:
+		var cell: Vector2i = Vector2i(model.cell_x, model.cell_y)
+		map.collisions[cell] = model.flag
+
+
+func _reload_warps(map: Map) -> void:
+	var models: Array[Models.MapWarpModel] = await _map_repository.get_warps(map.id)
+
+	map.warps.clear()
+
+	for model in models:
+		var cell: Vector2i = Vector2i(model.cell_x, model.cell_y)
+		map.warps[cell] = [
+			model.to_map_id,
+			model.to_cell_x,
+			model.to_cell_y,
+			model.to_facing_x,
+			model.to_facing_y
+		]

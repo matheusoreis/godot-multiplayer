@@ -200,8 +200,8 @@ func export_warps() -> Array:
 			continue
 
 		result.append([
-			warp.from_cell,
-			warp.to_map_id,
+			warp.cell,
+			warp.to_map,
 			warp.to_cell,
 			warp.to_facing
 		])
@@ -255,8 +255,8 @@ func _load_warps_from_data() -> void:
 		if not warp:
 			continue
 
-		warps[warp.from_cell] = [
-			warp.to_map_id,
+		warps[warp.cell] = [
+			warp.to_map,
 			warp.to_cell,
 			warp.to_facing
 		]

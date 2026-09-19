@@ -35,7 +35,7 @@ func _setup_network() -> bool:
 		Constants.ENDPOINT,
 	])
 
-	var err: Error = _network.start(Constants.ENDPOINT, (1024 * 4))
+	var err: Error = _network.start(Constants.ENDPOINT, (1024 * 8))
 	if err != OK:
 		push_error("Erro ao iniciar o cliente (%s)." % error_string(err))
 		return false

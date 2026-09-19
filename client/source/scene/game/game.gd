@@ -16,6 +16,23 @@ func _physics_process(_delta: float) -> void:
 	_handle_input()
 
 
+func _input(event: InputEvent) -> void:
+	if not event.is_action_pressed("export"):
+		return
+
+	if current_map == null or current_character == null:
+		return
+
+	if not current_character.is_admin():
+		return
+
+	var collisions_data: Array = current_map.export_collisions()
+	var warps_data: Array = current_map.export_warps()
+
+	_network.exec(&"import_collisions", [collisions_data])
+	_network.exec(&"import_warps", [warps_data])
+
+
 func _handle_input() -> void:
 	if not _can_process_input():
 		return
