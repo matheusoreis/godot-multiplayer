@@ -20,11 +20,6 @@ config/icon="res://main.svg"
 gdscript/warnings/shadowed_variable=0
 gdscript/warnings/shadowed_variable_base_class=0
 
-[display]
-
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
-
 [input]
 
 move_up={
