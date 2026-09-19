@@ -100,9 +100,6 @@ func move_character(direction: Vector2i) -> void:
 
 	var character: Character = account.character
 
-	if not character.can_move_now():
-		return
-
 	var map: Map = _map_manager.map(character.map)
 
 	if map == null:
@@ -114,7 +111,6 @@ func move_character(direction: Vector2i) -> void:
 		return
 
 	character.move(direction)
-	character.consume_move(Constants.CHARACTER_STEP_INTERVAL_MS)
 
 	var targets: Array = _peers_in_map(map.id)
 	targets.erase(sender_id)
