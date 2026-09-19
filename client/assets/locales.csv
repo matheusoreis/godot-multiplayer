@@ -1,0 +1,25 @@
+keys,pt_BR,en_US
+OK,OK,OK
+NO_CHARACTER_SELECTED,Nenhum personagem selecionado,No character selected
+MAP_NOT_FOUND,Mapa não encontrado,Map not found
+ALREADY_LOGGED_IN,Já está logado,Already logged in
+OUTDATED_CLIENT,Cliente desatualizado,Outdated client
+NOT_SIGNED_IN,Não está logado,Not signed in
+ACCOUNT_NOT_FOUND,Conta não encontrada,Account not found
+INCORRECT_PASSWORD,Senha incorreta,Incorrect password
+INVALID_EMAIL,Email inválido,Invalid email
+INVALID_PASSWORD,Senha inválida,Invalid password
+PASSWORDS_DO_NOT_MATCH,As senhas não coincidem,Passwords do not match
+EMAIL_ALREADY_REGISTERED,Email já registrado,Email already registered
+INVALID_IDENTIFIER,Identificador inválido,Invalid identifier
+IDENTIFIER_ALREADY_EXISTS,Identificador já existe,Identifier already exists
+INVALID_SPRITE,Sprite inválido,Invalid sprite
+CHARACTER_NOT_FOUND,Personagem não encontrado,Character not found
+CHARACTER_ALREADY_SELECTED,Personagem já selecionado,Character already selected
+NOT_OWNER,Não é o proprietário,Not the owner
+DATABASE_ERROR,Erro no banco de dados,Database error
+CELL_OUT_OF_BOUNDS,Célula fora dos limites,Cell out of bounds
+DESTINATION_OUT_OF_BOUNDS,Destino fora dos limites,Destination out of bounds
+NOT_AUTHORIZED,Não autorizado,Not authorized
+COLLISIONS_IMPORTED,Colisões importadas,Collisions imported
+WARPS_IMPORTED,Warps importados,Warps imported

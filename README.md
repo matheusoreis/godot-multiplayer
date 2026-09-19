@@ -13,6 +13,68 @@ A ideia central é que o servidor seja a autoridade do estado do jogo. O cliente
 
 ---
 
+## Funcionalidades
+
+O projeto já conta com uma base jogável de mundo multiplayer, incluindo:
+
+### Contas e personagens
+
+- Login com validação de e-mail e senha.
+- Cadastro de novas contas.
+- Lista de personagens vinculados à conta.
+- Criação de personagens com escolha de identificador e sprite.
+- Seleção do personagem que entrará no mundo.
+- Exclusão de personagens.
+- Persistência da posição, direção, mapa e demais dados do personagem.
+
+### Criação e apresentação de personagens
+
+- Spritesheets com animações direcionais para os personagens.
+- Pré-visualização dos sprites disponíveis durante a criação.
+- Movimentação em células com animação de transição.
+- Sincronização de personagens entre os jogadores presentes no mesmo mapa.
+- Controle de direção e correção de movimento enviada pelo servidor.
+
+### Mundo e mapas
+
+- Suporte a múltiplos mapas carregados pelo servidor.
+- Mapas com tilesets, tamanho configurável, música e efeitos sonoros.
+- Warps para transportar o jogador entre mapas e posições diferentes.
+- Sincronização de jogadores e NPCs de acordo com o mapa atual.
+- Persistência de mapas, colisões e warps em banco de dados.
+
+### NPCs
+
+- NPCs persistidos por mapa, com sprite, posição e direção.
+- NPCs estáticos e NPCs com movimentação automática.
+- Atualização periódica do comportamento dos NPCs pelo loop do servidor.
+- Sincronização do movimento dos NPCs com os clientes no mesmo mapa.
+
+### Chat multiplayer
+
+- Chat local para jogadores no mesmo mapa.
+- Chat global para todos os jogadores conectados com personagem selecionado.
+- Comandos `/local`, `/global` e `/help`.
+- Histórico limitado de mensagens e proteção contra interpretação indevida de tags.
+
+### Colisões e movimentação
+
+- Colisão de célula completa (`full block`).
+- Colisões independentes por direção: cima, baixo, esquerda e direita.
+- Validação de passagem no cliente para resposta imediata.
+- Validação da mesma movimentação no servidor, mantendo a autoridade do mundo.
+- Bloqueio de passagem diagonal quando as células adjacentes estão sólidas.
+- Exportação e importação das colisões a partir dos dados do mapa.
+
+### Administração
+
+- Papéis de jogador, moderador e administrador.
+- Ações de edição de mapa protegidas por permissão administrativa.
+- Importação de colisões e warps do mapa para o banco de dados.
+- Validação de autorização no servidor antes de alterar dados do mundo.
+
+---
+
 ## Arquitetura do projeto
 
 ### Estrutura principal

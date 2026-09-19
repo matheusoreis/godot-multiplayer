@@ -48,6 +48,10 @@ export={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://assets/locales.pt_BR.translation", "res://assets/locales.en_US.translation")
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
