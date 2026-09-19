@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://drrnwxogg6yfi"]
+
+[ext_resource type="Script" uid="uid://btyep1dye3lyb" path="res://source/gui/game/chat.gd" id="1_pxeu3"]
+
+[node name="Chat" type="PanelContainer" unique_id=2065655684]
+custom_minimum_size = Vector2(400, 200)
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+script = ExtResource("1_pxeu3")
+
+[node name="Margin" type="MarginContainer" parent="." unique_id=2140094355]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox1" type="VBoxContainer" parent="Margin" unique_id=1110976725]
+layout_mode = 2
+
+[node name="History" type="RichTextLabel" parent="Margin/VBox1" unique_id=1666481402]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBox1" type="HBoxContainer" parent="Margin/VBox1" unique_id=768212153]
+layout_mode = 2
+
+[node name="Message" type="LineEdit" parent="Margin/VBox1/HBox1" unique_id=1213423241]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Send" type="Button" parent="Margin/VBox1/HBox1" unique_id=1707206325]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Enviar"
+
+[connection signal="focus_entered" from="Margin/VBox1/HBox1/Message" to="." method="_on_message_focus_entered"]
+[connection signal="focus_exited" from="Margin/VBox1/HBox1/Message" to="." method="_on_message_focus_exited"]
+[connection signal="text_submitted" from="Margin/VBox1/HBox1/Message" to="." method="_on_message_text_submitted"]
+[connection signal="pressed" from="Margin/VBox1/HBox1/Send" to="." method="_on_send_pressed"]

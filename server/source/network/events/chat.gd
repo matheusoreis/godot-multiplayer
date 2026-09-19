@@ -15,19 +15,19 @@ func _init(network: Network.Server, account_manager: AccountManager, map_manager
 
 func register() -> Error:
 	return _network.register([
-		map_message,
+		local_message,
 		global_message
 	])
 
 
 func unregister() -> Error:
 	return _network.unregister([
-		map_message,
+		local_message,
 		global_message
 	])
 
 
-func map_message(message: String) -> void:
+func local_message(message: String) -> void:
 	var sender_id: int = _network.sender_id()
 
 	var account: Account = _account_manager.account(sender_id)
@@ -44,7 +44,7 @@ func map_message(message: String) -> void:
 	if targets.is_empty():
 		return
 
-	_network.exec(targets, &"map_message", [
+	_network.exec(targets, &"local_message", [
 		sender_id,
 		account.character.identifier,
 		message

@@ -1,7 +1,20 @@
 [gd_scene format=3 uid="uid://bmgt6shn1rxs4"]
 
 [ext_resource type="Script" uid="uid://dgvuq5ppmx8oa" path="res://source/scene/game/game.gd" id="1_u76ny"]
+[ext_resource type="PackedScene" uid="uid://j3qa4uulpffy" path="res://source/gui/shared/confirmation.tscn" id="2_mihmd"]
+[ext_resource type="PackedScene" uid="uid://drrnwxogg6yfi" path="res://source/gui/game/chat.tscn" id="2_ptj2f"]
 
-[node name="Game" type="Node2D" unique_id=1114023437]
+[node name="Game" type="Node2D" unique_id=1114023437 node_paths=PackedStringArray("_interfaces")]
 script = ExtResource("1_u76ny")
+_interfaces = {
+&"Chat": NodePath("Canvas/Chat"),
+&"Confirmation": NodePath("Canvas/Confirmation")
+}
 metadata/_custom_type_script = "uid://c0uikxaej1jws"
+
+[node name="Canvas" type="CanvasLayer" parent="." unique_id=1310502489]
+
+[node name="Chat" parent="Canvas" unique_id=2065655684 instance=ExtResource("2_ptj2f")]
+
+[node name="Confirmation" parent="Canvas" unique_id=1398550556 instance=ExtResource("2_mihmd")]
+visible = false

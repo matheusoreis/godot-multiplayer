@@ -5,6 +5,8 @@ class_name Game
 var current_map: Map
 var current_character: Character
 
+var chat_active: bool = false
+
 
 func _ready() -> void:
 	_network.exec(&"map_data")
@@ -27,6 +29,9 @@ func _handle_input() -> void:
 
 func _can_process_input() -> bool:
 	if current_map == null or current_character == null:
+		return false
+
+	if chat_active:
 		return false
 
 	if current_character.is_transitioning():
