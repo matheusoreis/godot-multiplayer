@@ -91,3 +91,7 @@ const WARP_COOLDOWN: float = 0.3
 const ROLE_NONE: int = 0
 const ROLE_MODERATOR: int = 1
 const ROLE_ADMIN: int = 2
+
+
+const ATTACK_SPRITESHEET_COLUMNS: int = 3
+const ATTACK_DURATION: float = 0.4

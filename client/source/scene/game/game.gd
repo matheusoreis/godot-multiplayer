@@ -17,6 +17,10 @@ func _physics_process(_delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("attack"):
+		_handle_attack()
+		return
+
 	if not event.is_action_pressed("export"):
 		return
 
@@ -31,6 +35,19 @@ func _input(event: InputEvent) -> void:
 
 	_network.exec(&"import_collisions", [collisions_data])
 	_network.exec(&"import_warps", [warps_data])
+
+
+func _handle_attack() -> void:
+	if current_map == null or current_character == null:
+		return
+
+	if chat_active:
+		return
+
+	if not current_character.attack():
+		return
+
+	#_network.exec(&"attack_character")
 
 
 func _handle_input() -> void:
@@ -55,6 +72,12 @@ func _can_process_input() -> bool:
 		return false
 
 	if current_character.is_warping():
+		return false
+
+	if current_character.is_busy():
+		return false
+
+	if current_character.has_pending_attack():
 		return false
 
 	return true
